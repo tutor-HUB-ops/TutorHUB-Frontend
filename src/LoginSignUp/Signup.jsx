@@ -32,28 +32,28 @@ const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const MySwal = withReactContent(Swal);
 
 function Copyright(props) {
-  return (
-  <Typography variant="body2" color="text.secondary" align="center" {...props}>
-    {'Copyright © '}
-    <Link color="inherit">TutorHub</Link>{' '}
-    {new Date().getFullYear()}
-    {'.'}
-  </Typography>
-);
+    return (
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+            {'Copyright © '}
+            <Link color="inherit">TutorHub</Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
 }
 
 const defaultTheme = createTheme({
-  palette: {
-    primary: {
-      main: '#4CAF50',
+    palette: {
+        primary: {
+            main: '#4CAF50',
+        },
+        secondary: {
+            main: '#f50057',
+        },
     },
-    secondary: {
-      main: '#f50057',
-    },
-  },
 });
 
-  const CustomBox = styled(Box)(({ theme }) => ({
+const CustomBox = styled(Box)(({ theme }) => ({
     width: '60%',
     margin: '1rem auto',
     display: 'flex',
@@ -61,21 +61,21 @@ const defaultTheme = createTheme({
     boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
     borderRadius: '2rem',
     [theme.breakpoints.down('md')]: {
-      width: '100vw',
-      margin: 0,
+        width: '100vw',
+        margin: 0,
     },
     [theme.breakpoints.down('sm')]: {
-      width: '100vw',
-      margin: 0,
-      padding: 0,
+        width: '100vw',
+        margin: 0,
+        padding: 0,
     },
-  }));
+}));
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
     width: '100%',
     marginBottom: theme.spacing(3),
     '& .MuiToggleButton-root': {
-    flex: 1,
+        flex: 1,
         padding: theme.spacing(1.5),
         border: `1px solid ${theme.palette.primary.main}`,
         '&.Mui-selected': {
@@ -89,15 +89,15 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 }));
 
 const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
 });
 
 const Signup = () => {
@@ -244,14 +244,14 @@ const Signup = () => {
     const handleAvailabilityChange = (index, e) => {
         const newAvailability = [...teacherData.availability];
         newAvailability[index] = { ...newAvailability[index], [e.target.name]: e.target.value };
-        
+
         // Clear time range error when either time is changed
         if (e.target.name === 'startTime' || e.target.name === 'endTime') {
             if (errors.availability && errors.availability[index]) {
                 delete errors.availability[index].timeRange;
             }
         }
-        
+
         setTeacherData({ ...teacherData, availability: newAvailability });
     };
 
@@ -380,8 +380,8 @@ const Signup = () => {
 
         try {
             console.log('Uploading files for teacher:', teacherData.id); // Debug log
-            const response = await fetch(`${VITE_API_BASE_URL}/auth/register/teacher/files`, {
-                method: 'POST',
+            const response = await fetch(`${VITE_API_BASE_URL}/teacher/attachments/add`, {
+                method: 'PATCH',
                 body: formData,
                 credentials: 'include',
             });
@@ -413,23 +413,23 @@ const Signup = () => {
         }
     };
 
-  return (
-    <CustomBox>
-        <ThemeProvider theme={defaultTheme}>
-          <Container component="main" maxWidth="xs">
-            <CssBaseline />
+    return (
+        <CustomBox>
+            <ThemeProvider theme={defaultTheme}>
+                <Container component="main" maxWidth="xs">
+                    <CssBaseline />
                     <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <LinkR to='/'>
+                        <LinkR to='/'>
                             <img src={Logo} alt="Logo" style={{ width: '100px', marginBottom: '20px' }} />
-              </LinkR>
+                        </LinkR>
                         <Typography component="h1" variant="h5" sx={{ fontWeight: 600, mb: 3 }}>
                             Sign Up
-              </Typography>
+                        </Typography>
                         <Box component="form" onSubmit={isTeacher ? (teacherStep === 1 ? handleTeacherStep1 : handleTeacherStep2) : handleStudentSubmit} noValidate sx={{ mt: 1, width: '100%' }}>
                             {teacherStep === 1 && (
                                 <StyledToggleButtonGroup
                                     value={isTeacher ? 'teacher' : 'student'}
-                exclusive
+                                    exclusive
                                     onChange={(e, value) => setIsTeacher(value === 'teacher')}
                                     aria-label="user type"
                                 >
@@ -445,10 +445,10 @@ const Signup = () => {
                             {isTeacher ? (
                                 teacherStep === 1 ? (
                                     <>
-                    <TextField
+                                        <TextField
                                             margin="normal"
-                      required
-                      fullWidth
+                                            required
+                                            fullWidth
                                             name="name"
                                             label="Name"
                                             onChange={handleTeacherChange}
@@ -456,28 +456,28 @@ const Signup = () => {
                                             error={!!errors.name}
                                             helperText={errors.name}
                                         />
-                    <TextField
+                                        <TextField
                                             margin="normal"
-                      required
-                      fullWidth
-                      name="email"
+                                            required
+                                            fullWidth
+                                            name="email"
                                             label="Email"
                                             onChange={handleTeacherChange}
-                      autoComplete="email"
-                      error={!!errors.email}
-                      helperText={errors.email}
-                    />
-                    <TextField
+                                            autoComplete="email"
+                                            error={!!errors.email}
+                                            helperText={errors.email}
+                                        />
+                                        <TextField
                                             margin="normal"
-                      required
-                      fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
+                                            required
+                                            fullWidth
+                                            name="password"
+                                            label="Password"
+                                            type="password"
                                             onChange={handleTeacherChange}
-                      autoComplete="new-password"
-                      error={!!errors.password}
-                      helperText={errors.password}
+                                            autoComplete="new-password"
+                                            error={!!errors.password}
+                                            helperText={errors.password}
                                         />
                                         <TextField
                                             margin="normal"
@@ -494,14 +494,14 @@ const Signup = () => {
                                         <Typography variant="h6" sx={{ mt: 3, mb: 2, color: 'primary.main' }}>Subjects</Typography>
                                         {teacherData.subjects.map((subject, index) => (
                                             <Box key={index} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                          <TextField
-                            fullWidth
+                                                <TextField
+                                                    fullWidth
                                                     placeholder={`Subject ${index + 1}`}
                                                     value={subject}
                                                     onChange={(e) => handleSubjectChange(index, e)}
                                                     sx={{ mr: 1 }}
-                          />
-                          <IconButton
+                                                />
+                                                <IconButton
                                                     onClick={() => deleteSubject(index)}
                                                     color="error"
                                                     sx={{ mr: 1 }}
@@ -509,14 +509,14 @@ const Signup = () => {
                                                     <DeleteIcon />
                                                 </IconButton>
                                                 {index === teacherData.subjects.length - 1 && (
-                                                    <IconButton 
+                                                    <IconButton
                                                         onClick={addSubject}
-                            color="primary"
-                          >
-                            <AddIcon />
-                          </IconButton>
+                                                        color="primary"
+                                                    >
+                                                        <AddIcon />
+                                                    </IconButton>
                                                 )}
-                        </Box>
+                                            </Box>
                                         ))}
 
                                         <Typography variant="h6" sx={{ mt: 3, mb: 2, color: 'primary.main' }}>Availability</Typography>
@@ -560,7 +560,7 @@ const Signup = () => {
                                                     <DeleteIcon />
                                                 </IconButton>
                                                 {index === teacherData.availability.length - 1 && (
-                                                    <IconButton 
+                                                    <IconButton
                                                         onClick={addAvailability}
                                                         color="primary"
                                                     >
@@ -616,10 +616,10 @@ const Signup = () => {
                                         error={!!errors.email}
                                         helperText={errors.email}
                                     />
-                        <TextField
+                                    <TextField
                                         margin="normal"
-                          required
-                          fullWidth
+                                        required
+                                        fullWidth
                                         name="password"
                                         label="Password"
                                         type="password"
@@ -628,33 +628,33 @@ const Signup = () => {
                                         error={!!errors.password}
                                         helperText={errors.password}
                                     />
-                    </>
-                  )}
+                                </>
+                            )}
 
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
                             >
                                 {isTeacher && teacherStep === 2 ? 'Complete Registration' : 'Register'}
-                </Button>
+                            </Button>
                             <Grid container sx={{ marginTop: '1rem', justifyContent: 'center' }}>
-                  <Grid item>
-                    <LinkR to='/login'>
+                                <Grid item>
+                                    <LinkR to='/login'>
                                         <Link variant="body2">
                                             {"Already have an account? Log In"}
-                      </Link>
-                    </LinkR>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Box>
+                                        </Link>
+                                    </LinkR>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Box>
                     <Copyright sx={{ mt: 10, mb: 2 }} />
-          </Container>
-        </ThemeProvider>
-    </CustomBox>
-  );
+                </Container>
+            </ThemeProvider>
+        </CustomBox>
+    );
 };
 
 export default Signup;
