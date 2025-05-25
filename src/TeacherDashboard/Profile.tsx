@@ -418,7 +418,7 @@ const Profile: React.FC = () => {
 
       const token = tokenMatch.split('=')[1];
 
-      const response = await fetch(`${VITE_API_BASE_URL}teacher/availability/add`, {
+      const response = await fetch(`${VITE_API_BASE_URL}/teacher/availability/add`, {
         method: 'PATCH',
         headers: {
           "Content-Type": "application/json",
