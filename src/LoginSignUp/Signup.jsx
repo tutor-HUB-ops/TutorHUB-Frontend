@@ -311,22 +311,30 @@ const Signup = () => {
             return;
         }
         try {
+            console.log('Sending teacher data:', teacherData); // Debug log
             const response = await fetch(`${VITE_API_BASE_URL}/auth/register/teacher/data`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(teacherData),
+                body: JSON.stringify({
+                    name: teacherData.name,
+                    email: teacherData.email,
+                    password: teacherData.password,
+                    availability: teacherData.availability,
+                    subjects: teacherData.subjects,
+                    hourlyRate: Number(teacherData.hourlyRate)
+                }),
                 credentials: 'include',
             });
 
             const data = await response.json();
+            console.log('Teacher registration response:', data); // Debug log
 
             if (response.ok) {
-
                 setTeacherData(prev => ({
-                ...prev,
-                id: data.teacher._id  
+                    ...prev,
+                    id: data.user._id
                 }));
                 setTeacherStep(2);
                 await MySwal.fire({
@@ -340,6 +348,7 @@ const Signup = () => {
                 throw new Error(data.msg || 'Registration failed');
             }
         } catch (error) {
+            console.error('Teacher registration error:', error); // Debug log
             MySwal.fire({
                 title: 'Error!',
                 text: error.message,
@@ -370,13 +379,15 @@ const Signup = () => {
         formData.append('userId', teacherData.id);
 
         try {
-            const response = await fetch(`${VITE_API_BASE_URL}/teacher/attachments/add`, {
+            console.log('Uploading files for teacher:', teacherData.id); // Debug log
+            const response = await fetch(`${VITE_API_BASE_URL}/auth/register/teacher/files`, {
                 method: 'POST',
                 body: formData,
                 credentials: 'include',
             });
 
             const data = await response.json();
+            console.log('File upload response:', data); // Debug log
 
             if (response.ok) {
                 await MySwal.fire({
@@ -391,6 +402,7 @@ const Signup = () => {
                 throw new Error(data.msg || 'File upload failed');
             }
         } catch (error) {
+            console.error('File upload error:', error); // Debug log
             MySwal.fire({
                 title: 'Error!',
                 text: error.message,
