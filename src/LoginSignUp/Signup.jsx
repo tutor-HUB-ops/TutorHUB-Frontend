@@ -324,7 +324,6 @@ const Signup = () => {
                     subjects: teacherData.subjects,
                     hourlyRate: Number(teacherData.hourlyRate)
                 }),
-                credentials: 'include',
             });
 
             const data = await response.json();
@@ -382,7 +381,6 @@ const Signup = () => {
             const response = await fetch(`${VITE_API_BASE_URL}/teacher/attachments/add`, {
                 method: 'PATCH',
                 body: formData,
-                credentials: 'include',
             });
 
             const data = await response.json();
